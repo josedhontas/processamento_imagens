@@ -11,12 +11,24 @@ interface ImageData {
 const Operations = () => {
   const [images, setImages] = useState<ImageData[]>([]);
   const [selectedImage, setSelectedImage] = useState("https://image-api.josedhonatas.ninja/images/1");
+  const [idImage, setIdImage] = useState('1');
   const [listimages, setListimages] = useState(['1', '2', '3', '4']);
-  const [filterimages, setFilterimages] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
+  const [filter, setFilter] = useState('')
+  const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
+  const [filteredImage, setFilteredImage] = useState()
 
   useEffect(() => {
     getImages();
   }, []);
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
+  useEffect(() => {
+    console.log(idImage);
+    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${idImage}`)
+  }, [idImage]);
 
   const getImages = () => {
     axios
@@ -27,16 +39,21 @@ const Operations = () => {
       .catch((err) => console.log(err));
   };
 
+  const getFilteredImage = () =>{
+    setSelectedImage(`https://image-api.josedhonatas.ninjas/images/${filter}/${idImage}`)
+  }
+
+
 
   return (
     <Container>
-      <Select label="Image">
+      <Select value={idImage} onChange={e => setIdImage(e.target.value)} label="Image">
         {listimages.map((item, i) => (
           <MenuItem value={item}>{item}</MenuItem>
         ))}
       </Select>
-      <Select label="Image">
-        {filterimages.map((item, i) => (
+      <Select value={filter} onChange={e => setFilter(e.target.value)}label="filter">
+        {filters.map((item, i) => (
           <MenuItem value={item}>{item}</MenuItem>
         ))}
       </Select>
