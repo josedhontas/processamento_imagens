@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Select from '@mui/material/Select';
+import Select from '@mui/material/Select'; 
 import { Container, Grid, Paper, MenuItem, Button } from '@mui/material';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const Operations = () => {
   const [listimages, setListimages] = useState(['1', '2', '3', '4']);
   const [filter, setFilter] = useState('')
   const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
-  const [filteredImage, setFilteredImage] = useState()
+  const [filteredImage, setFilteredImage] = useState("https://image-api.josedhonatas.ninja/images/1")
 
   useEffect(() => {
     getImages();
@@ -23,12 +23,13 @@ const Operations = () => {
 
   useEffect(() => {
     console.log(filter);
-  }, [filter]);
+    setFilteredImage(`https://image-api.josedhonatas.ninja/images/${filter}/${idImage}`);
+  }, [filter, idImage]);
 
   useEffect(() => {
-    console.log(idImage);
-    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${idImage}`)
+    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
   }, [idImage]);
+  
 
   const getImages = () => {
     axios
@@ -42,6 +43,9 @@ const Operations = () => {
   const getFilteredImage = () =>{
     setSelectedImage(`https://image-api.josedhonatas.ninjas/images/${filter}/${idImage}`)
   }
+
+  console.log(filteredImage)
+
 
 
 
@@ -60,13 +64,14 @@ const Operations = () => {
       {selectedImage && (
         <Grid container spacing={2}>
           <Grid item xs={6}>
+          <h2>Original</h2>
             <Paper>
               <img src={selectedImage} alt="Original" style={{ width: '100%' }} />
             </Paper>
           </Grid>
           <Grid item xs={6}>
             <Paper>
-              <img alt="Filtrada" />
+              <img src= {filteredImage} style={{width: '100%'}} alt="Filtrada" />
             </Paper>
           </Grid>
           <Grid item xs={12}>
