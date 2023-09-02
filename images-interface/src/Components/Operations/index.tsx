@@ -24,7 +24,7 @@ const Operations = () => {
   useEffect(() => {
     console.log(filter);
     setFilteredImage(`https://image-api.josedhonatas.ninja/images/${filter}/${idImage}`);
-  }, [filter, idImage]);
+  }, [filter]);
 
   useEffect(() => {
     setSelectedImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
