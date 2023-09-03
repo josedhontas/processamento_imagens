@@ -8,6 +8,7 @@ const Operations = () => {
   const [imageName, setimageName] = useState('lenna');
   const [listimages, setListimages] = useState(['lenna', 'lenna_gray']);
   const [filter, setFilter] = useState('')
+  const [loading1, setLoading1] = useState(false)
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
   const [filteredImage, setFilteredImage] = useState("https://image-api.josedhonatas.ninja/images/lenna")
@@ -46,9 +47,28 @@ const Operations = () => {
   };
 
   useEffect(() => {
-    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
-    setFilteredImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
-    setFilter('')
+    setLoading(true)
+    fetch(`https://image-api.josedhonatas.ninja/images/${imageName}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Não foi possível obter a imagem.');
+          }
+          return response.blob();
+        })
+        .then((blob) => {
+          const dataUrl = URL.createObjectURL(blob);
+          setSelectedImage(dataUrl)
+          setFilteredImage(dataUrl);
+        })
+        .catch((error) => {
+          console.error('Erro ao obter a imagem:', error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    //setSelectedImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
+    //setFilteredImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
+    //setFilter('')
   }, [imageName]);
 
   return (
