@@ -18,22 +18,24 @@ const Operations = () => {
 
   const applyFilter = () => {
     if (filter) {
-      //setLoading(true);
+      setLoading(true);
+
       fetch(`https://image-api.josedhonatas.ninja/images/${filter}/${imageName}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Não foi possível obter a imagem.');
           }
-          return response.blob(); // Converte a resposta em um blob
+          return response.blob();
         })
         .then((blob) => {
           const dataUrl = URL.createObjectURL(blob);
-          setFilteredImage(dataUrl); 
-          setLoading(false);
+          setFilteredImage(dataUrl);
         })
         .catch((error) => {
           console.error('Erro ao obter a imagem:', error);
-          setLoading(false); 
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       console.log('Por favor, selecione um filtro antes de aplicar.');
@@ -41,15 +43,13 @@ const Operations = () => {
   };
 
   const getImages = () => {
-    // Coloque aqui a lógica para buscar as imagens originais, se necessário
   };
-  
+
   useEffect(() => {
     setSelectedImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
     setFilteredImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
     setFilter('')
   }, [imageName]);
-  
 
   return (
     <Container>
@@ -98,7 +98,9 @@ const Operations = () => {
           <Typography variant="h6" align='center'>Filtered</Typography>
           <Paper elevation={3}>
             {loading ? (
-              <CircularProgress />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+                <CircularProgress />
+              </div>
             ) : (
               <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
             )}
