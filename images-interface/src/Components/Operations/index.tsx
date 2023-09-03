@@ -10,12 +10,12 @@ interface ImageData {
 
 const Operations = () => {
   const [images, setImages] = useState<ImageData[]>([]);
-  const [selectedImage, setSelectedImage] = useState("https://image-api.josedhonatas.ninja/images/1");
-  const [idImage, setIdImage] = useState('1');
-  const [listimages, setListimages] = useState(['1', '2', '3', '4']);
+  const [selectedImage, setSelectedImage] = useState("https://image-api.josedhonatas.ninja/images/lenna");
+  const [idImage, setIdImage] = useState('lenna');
+  const [listimages, setListimages] = useState(['lenna', 'lenna_gray']);
   const [filter, setFilter] = useState('')
   const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
-  const [filteredImage, setFilteredImage] = useState("https://image-api.josedhonatas.ninja/images/1")
+  const [filteredImage, setFilteredImage] = useState("https://image-api.josedhonatas.ninja/images/lenna")
 
   useEffect(() => {
     getImages();
