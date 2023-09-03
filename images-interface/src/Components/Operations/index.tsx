@@ -23,7 +23,7 @@ const Operations = () => {
 
   const applyFilter = () => {
     if (filter) {
-      setFilteredImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
+      setFilteredImage(`https://image-api.josedhonatas.ninja/images/${filter}/${idImage}`);
     } else {
       console.log('Por favor, selecione um filtro antes de aplicar.');
     }
