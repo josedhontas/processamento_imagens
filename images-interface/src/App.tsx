@@ -1,11 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Operations from './Components/Operations';
-
+import { Theme } from './Components/Theme';
+import { ThemeProvider } from '@emotion/react';
 function App() {
   return(
-    <Operations></Operations>
+    <ThemeProvider theme={Theme}>
+          <Operations></Operations>
+
+    </ThemeProvider>
   )
 }
 
