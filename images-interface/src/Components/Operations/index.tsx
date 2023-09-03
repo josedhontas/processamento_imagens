@@ -21,9 +21,16 @@ const Operations = () => {
     getImages();
   }, []);
 
+  const applyFilter = () => {
+    if (filter) {
+      setFilteredImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
+    } else {
+      console.log('Por favor, selecione um filtro antes de aplicar.');
+    }
+  };
+
   useEffect(() => {
     console.log(filter);
-    setFilteredImage(`https://image-api.josedhonatas.ninja/images/${filter}/${idImage}`);
   }, [filter]);
 
   useEffect(() => {
@@ -41,9 +48,7 @@ const Operations = () => {
       .catch((err) => console.log(err));
   };
 
-  const getFilteredImage = () =>{
-    setSelectedImage(`https://image-api.josedhonatas.ninjas/images/${filter}/${idImage}`)
-  }
+
 
   console.log(filteredImage)
 
@@ -76,7 +81,7 @@ const Operations = () => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained">Aplicar Filtro</Button>
+            <Button variant="contained" onClick={applyFilter}>Aplicar Filtro</Button>
           </Grid>
         </Grid>
       )}
