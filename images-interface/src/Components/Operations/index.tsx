@@ -38,6 +38,28 @@ const Operations = () => {
     setFilteredImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
   }, [idImage]);
 
+  const renderImages = () => {
+    if (selectedImage) {
+      return (
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography variant="h6" align="center"> Original</Typography>
+            <Paper elevation={3}>
+              <img src={selectedImage} alt="Original" style={{ width: '80%' }} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography variant="h6" align='center'>Filtered</Typography>
+            <Paper elevation={3}>
+              <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
+            </Paper>
+          </Grid>
+        </Grid>
+      );
+    } else {
+      return null; // Não há imagem selecionada, não renderiza nada.
+    }
+  };
 
   const getImages = () => {
     axios
@@ -91,22 +113,7 @@ const Operations = () => {
       </Grid>
       <br></br>
 
-      {selectedImage && (
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6" align="center"> Original</Typography>
-            <Paper elevation={3}>
-              <img src={selectedImage} alt="Original" style={{ width: '80%' }} />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6" align='center'>Filtered</Typography>
-            <Paper elevation = {3}>
-              <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
-            </Paper>
-          </Grid>
-        </Grid>
-      )}
+      {selectedImage && renderImages()}
     </Container>
   );
 };
