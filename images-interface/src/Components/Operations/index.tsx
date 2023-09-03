@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Select from '@mui/material/Select';
 import { Container, Grid, Paper, MenuItem, Button, FormControl, InputLabel, Typography } from '@mui/material';
-import axios from 'axios';
-
-interface ImageData {
-  image_id: number;
-  image_url: string;
-}
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Operations = () => {
-  const [images, setImages] = useState<ImageData[]>([]);
   const [selectedImage, setSelectedImage] = useState("https://image-api.josedhonatas.ninja/images/lenna");
-  const [idImage, setIdImage] = useState('lenna');
+  const [imageName, setimageName] = useState('lenna');
   const [listimages, setListimages] = useState(['lenna', 'lenna_gray']);
   const [filter, setFilter] = useState('')
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'blur'])
   const [filteredImage, setFilteredImage] = useState("https://image-api.josedhonatas.ninja/images/lenna")
 
@@ -23,59 +18,38 @@ const Operations = () => {
 
   const applyFilter = () => {
     if (filter) {
-      setFilteredImage(`https://image-api.josedhonatas.ninja/images/${filter}/${idImage}`);
+      //setLoading(true);
+      fetch(`https://image-api.josedhonatas.ninja/images/${filter}/${imageName}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Não foi possível obter a imagem.');
+          }
+          return response.blob(); // Converte a resposta em um blob
+        })
+        .then((blob) => {
+          const dataUrl = URL.createObjectURL(blob);
+          setFilteredImage(dataUrl); 
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Erro ao obter a imagem:', error);
+          setLoading(false); 
+        });
     } else {
       console.log('Por favor, selecione um filtro antes de aplicar.');
     }
   };
 
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
-  useEffect(() => {
-    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
-    setFilteredImage(`https://image-api.josedhonatas.ninja/images/${idImage}`);
-  }, [idImage]);
-
-  const renderImages = () => {
-    if (selectedImage) {
-      return (
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6" align="center"> Original</Typography>
-            <Paper elevation={3}>
-              <img src={selectedImage} alt="Original" style={{ width: '80%' }} />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6" align='center'>Filtered</Typography>
-            <Paper elevation={3}>
-              <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
-            </Paper>
-          </Grid>
-        </Grid>
-      );
-    } else {
-      return null; // Não há imagem selecionada, não renderiza nada.
-    }
-  };
-
   const getImages = () => {
-    axios
-      .get("https://image-api.josedhonatas.ninja/images/all")
-      .then((res) => {
-        setImages(res.data);
-      })
-      .catch((err) => console.log(err));
+    // Coloque aqui a lógica para buscar as imagens originais, se necessário
   };
-
-
-
-  console.log(filteredImage)
-
-
-
+  
+  useEffect(() => {
+    setSelectedImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
+    setFilteredImage(`https://image-api.josedhonatas.ninja/images/${imageName}`);
+    setFilter('')
+  }, [imageName]);
+  
 
   return (
     <Container>
@@ -84,7 +58,7 @@ const Operations = () => {
         <Grid item xs={4}>
           <FormControl fullWidth>
             <InputLabel>Image</InputLabel>
-            <Select value={idImage} onChange={e => setIdImage(e.target.value)} label="Image">
+            <Select value={imageName} onChange={e => setimageName(e.target.value)} label="Image">
               {listimages.map((item, i) => (
                 <MenuItem value={item} key={i}>
                   {item}
@@ -113,7 +87,24 @@ const Operations = () => {
       </Grid>
       <br></br>
 
-      {selectedImage && renderImages()}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={6}>
+          <Typography variant="h6" align="center"> Original</Typography>
+          <Paper elevation={3}>
+            <img src={selectedImage} alt="Original" style={{ width: '80%' }} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <Typography variant="h6" align='center'>Filtered</Typography>
+          <Paper elevation={3}>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
