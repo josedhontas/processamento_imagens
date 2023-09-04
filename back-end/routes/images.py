@@ -13,7 +13,7 @@ def get_all_images():
     for filename in os.listdir(image_folder):
         if filename.endswith('.jpg'):
             image_name = (filename.split('.')[0])
-            image_url = f'https://image-api.josedhonatas.ninja/images/{image_name}'         
+            image_url = f'http://localhost:5000/images/{image_name}'         
             image_info = {
                 'image_name': image_name,
                 'image_url': image_url
@@ -72,7 +72,7 @@ def get_blur_image(image_name):
 def get_erode_image(image_name):
     image_path = f'img/{image_name}.jpg'
     image = imread(image_path)
-    element = seCross3()
+    element = seSquare3()
     image_erode = erode(image, element)
     image_out = imshow(image_erode)
     return send_file(image_out, mimetype='image/png')
@@ -81,7 +81,7 @@ def get_erode_image(image_name):
 def get_dilate_image(image_name):
     image_path = f'img/{image_name}.jpg'
     image = imread(image_path)
-    element = seCross3()
+    element = seSquare3()
     image_dilate = dilate(image, element)
     image_out = imshow(image_dilate)
     return send_file(image_out, mimetype='image/png')
