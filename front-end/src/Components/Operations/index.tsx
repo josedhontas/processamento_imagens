@@ -10,7 +10,7 @@ const Operations = () => {
   const [filter, setFilter] = useState('')
   const [loading1, setLoading1] = useState(false)
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq'])
+  const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq','contrast'])
   const [filteredImage, setFilteredImage] = useState('')
 
   useEffect(() => {
