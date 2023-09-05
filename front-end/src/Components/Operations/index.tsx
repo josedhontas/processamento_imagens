@@ -21,7 +21,7 @@ const Operations = () => {
     if (filter) {
       setLoading(true);
 
-      fetch(`https://image-api.josedhonata.ninja/images/${filter}/${imageName}`)
+      fetch(`https://image-api.josedhonatas.ninja/images/${filter}/${imageName}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Não foi possível obter a imagem.');
@@ -49,7 +49,7 @@ const Operations = () => {
   useEffect(() => {
     setLoading1(true)
     setLoading(true)
-    fetch(`https://image-api.josedhonata.ninja/images/${imageName}`)
+    fetch(`https://image-api.josedhonatas.ninja/images/${imageName}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Não foi possível obter a imagem.');
