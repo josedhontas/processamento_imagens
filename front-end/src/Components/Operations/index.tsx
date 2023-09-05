@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const Operations = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageName, setimageName] = useState('lenna');
-  const [listimages, setListimages] = useState(['lenna', 'lenna_gray']);
+  const [listimages, setListimages] = useState(['lenna', 'lenna_gray', 'prof_daniel']);
   const [filter, setFilter] = useState('')
   const [loading1, setLoading1] = useState(false)
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const Operations = () => {
     if (filter) {
       setLoading(true);
 
-      fetch(`https://image-api.josedhonatas.ninja/images/${filter}/${imageName}`)
+      fetch(`https://image-api.josedhonata.ninja/images/${filter}/${imageName}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Não foi possível obter a imagem.');
@@ -49,7 +49,7 @@ const Operations = () => {
   useEffect(() => {
     setLoading1(true)
     setLoading(true)
-    fetch(`https://image-api.josedhonatas.ninja/images/${imageName}`)
+    fetch(`https://image-api.josedhonata.ninja/images/${imageName}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Não foi possível obter a imagem.');

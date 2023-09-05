@@ -13,7 +13,7 @@ def get_all_images():
     for filename in os.listdir(image_folder):
         if filename.endswith('.jpg'):
             image_name = (filename.split('.')[0])
-            image_url = f'https://image-api.josedhonatas.ninja/images/{image_name}'         
+            image_url = f'https://image-api.josedhonata.ninja/images/{image_name}'         
             image_info = {
                 'image_name': image_name,
                 'image_url': image_url
