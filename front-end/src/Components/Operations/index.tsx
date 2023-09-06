@@ -118,7 +118,7 @@ const Operations = () => {
                 <CircularProgress />
               </div>
             ) : (
-              <img src={selectedImage} alt="Original" style={{ width: '100%' }} />
+              <img src={selectedImage} alt="Original" style={{ width: '80%' }} />
             )}
           </Paper>
         </Grid>
@@ -130,7 +130,7 @@ const Operations = () => {
                 <CircularProgress />
               </div>
             ) : (
-              <img src={filteredImage} style={{ width: '100%' }} alt="Filtered" />
+              <img src={filteredImage} style={{ width: '80%' }} alt="Filtered" />
             )}
           </Paper>
         </Grid>
