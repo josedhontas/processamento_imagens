@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import matplotlib.cm as cm
-import os
-import io
 
 def imread(filename):
     im = mpimg.imread(filename)
