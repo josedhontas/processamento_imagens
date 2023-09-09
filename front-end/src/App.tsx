@@ -5,12 +5,11 @@ import { Theme } from './Components/Theme';
 import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 function App() {
-  return(
+  return (
     <ThemeProvider theme={Theme}>
-            <CssBaseline>          <Operations></Operations>
-</CssBaseline>
-
-
+      <CssBaseline>
+        <Operations></Operations>
+      </CssBaseline>
     </ThemeProvider>
   )
 }
