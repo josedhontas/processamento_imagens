@@ -11,8 +11,9 @@ const Operations = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageName, setimageName] = useState('lenna');
   const [listimages, setListimages] = useState(['lenna', 'lenna_gray', 'prof_daniel']);
-  const [filter, setFilter] = useState('')
-  const [loading1, setLoading1] = useState(false)
+  const [imageinfo, setImageInfo] = useState('');
+  const [filter, setFilter] = useState('');
+  const [loading1, setLoading1] = useState(false);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState(['negative', 'thresh', 'gray', 'histeq', 'contrast'])
   const [filteredImage, setFilteredImage] = useState('')
@@ -72,6 +73,24 @@ const Operations = () => {
         setLoading1(false)
         setLoading(false);
       });
+
+      fetch(`https://image-api.josedhonatas.ninja/images/info/${imageName}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Não foi possível obter informações sobre a imagem.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setImageInfo(data);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter informações da imagem:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    console.log(imageinfo)
     setFilter('')
   }, [imageName]);
 
@@ -122,7 +141,8 @@ const Operations = () => {
                 <CircularProgress />
               </div>
             ) : (
-              <img src={selectedImage} alt="Original" style={{ width: '75%' }} />
+              <img src={selectedImage} alt="Original" style={{ width: '75%' }}                 title={`Filtered Image: ${imageName}`} // Título da imagem filtrada
+              />
             )}
           </Grid>
           
