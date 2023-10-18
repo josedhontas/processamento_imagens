@@ -29,6 +29,14 @@ def get_image(image_name):
     image = imshow(img)
     return send_file(image, mimetype='image/png')
 
+
+@images_bp.route('/info/<string:image_name>')
+def get_info(image_name):
+    image_path = f'img/{image_name}.jpg'
+    img = imread(image_path)
+    image = imshow(img)
+    return send_file(image, mimetype='image/png')
+
 @images_bp.route('/negative/<string:image_name>')
 def get_negative_image(image_name):
     image_path = f'img/{image_name}.jpg'
