@@ -10,8 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 const Operations = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageName, setimageName] = useState('lenna');
-  const [listimages, setListimages] = useState(['lenna', 'lenna_gray', 'prof_daniel']);
-  const [imageinfo, setImageInfo] = useState('');
+  const [listimages, setListimages] = useState(['lenna', 'lenna_gray','venusaur']);
+  const [imageinfo, setImageInfo] = useState<{ num_channels: number; image_size: [number, number] } | null>(null);
   const [filter, setFilter] = useState('');
   const [loading1, setLoading1] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,6 +82,7 @@ const Operations = () => {
         return response.json();
       })
       .then((data) => {
+        console.log(data)
         setImageInfo(data);
       })
       .catch((error) => {
@@ -90,7 +91,6 @@ const Operations = () => {
       .finally(() => {
         setLoading(false);
       });
-    console.log(imageinfo)
     setFilter('')
   }, [imageName]);
 
@@ -141,7 +141,7 @@ const Operations = () => {
                 <CircularProgress />
               </div>
             ) : (
-              <img src={selectedImage} alt="Original" style={{ width: '75%' }}                 title={`Filtered Image: ${imageName}`} // Título da imagem filtrada
+              <img src={selectedImage} alt="Original" style={{ width: '75%' }} title={`Channels: ${imageinfo?.num_channels}\n Size: ${imageinfo?.image_size}`} // Título da imagem filtrada
               />
             )}
           </Grid>
@@ -157,19 +157,7 @@ const Operations = () => {
             )}
           </Grid>
         </Grid>
-        <List>
-          <ListItem>
-            <ListItemText primary={`Name: ${imageName}`} />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <ListItemText primary={`Channels: ${imageName}`} />
-          </ListItem>
-          <Divider/>
-          <ListItem>
-            <ListItemText primary={`Size: ${imageName}`} />
-          </ListItem>
-        </List>
+
       </Container>
     </>
 
