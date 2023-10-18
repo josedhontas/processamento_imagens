@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 const Operations = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [imageName, setimageName] = useState('lenna');
-  const [listimages, setListimages] = useState(['lenna', 'lenna_gray','venusaur']);
+  const [listimages, setListimages] = useState(['lenna', 'lenna_gray','venusaur', 'blastoise', 'charizard']);
   const [imageinfo, setImageInfo] = useState<{ num_channels: number; image_size: [number, number] } | null>(null);
   const [filter, setFilter] = useState('');
   const [loading1, setLoading1] = useState(false);
