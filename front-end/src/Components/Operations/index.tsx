@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Select from '@mui/material/Select';
 import { Container, Grid, Paper, MenuItem, Button, FormControl, InputLabel, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
 
 const Operations = () => {
   const [selectedImage, setSelectedImage] = useState('');
